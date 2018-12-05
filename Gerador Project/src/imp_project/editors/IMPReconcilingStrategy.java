@@ -149,7 +149,7 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                        while (cNextPos < fRangeEnd) {
                                char ch = fDocument.getChar(cNextPos++);
                                switch (ch) {
-                               case '<':
+                               case '{':
                                        int startOffset = cNextPos - 1;
                                        int startNewLines = newLines;
                                        int classification = classifyTag();
@@ -226,13 +226,13 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                        cNewLines = 0;
 
                        // processing instruction?
-                       if ('?' == ch) {
+                       if ('/' == ch) {
                                boolean piFlag = false;
                                while (cNextPos < fRangeEnd) {
                                        ch = fDocument.getChar(cNextPos++);
-                                       if (('>' == ch) && piFlag)
+                                       if (('}' == ch) && piFlag)
                                                return PI_TAG;
-                                       piFlag = ('?' == ch);
+                                       piFlag = ('/' == ch);
                                }
                                return EOR_TAG;
                        }
@@ -244,7 +244,7 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                                int commEnd = 0;
                                while (cNextPos < fRangeEnd) {
                                        ch = fDocument.getChar(cNextPos++);
-                                       if (('>' == ch) && (commEnd >= 2))
+                                       if (('}' == ch) && (commEnd >= 2))
                                                return COMMENT_TAG;
                                    if (('\n' == ch) || (       '\r' == ch)) {
                                                if ((ch == cLastNLChar) || (' ' == cLastNLChar)) {
@@ -269,16 +269,16 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                        }
 
                        // end tag?
-                       if ('/' == ch) {
+                       if (';' == ch) {
                                while (cNextPos < fRangeEnd) {
                                        ch = fDocument.getChar(cNextPos++);
-                                       if ('>' == ch) {
+                                       if ('?' == ch) {
                                                cNewLines += eatToEndOfLine();
                                                return END_TAG;
                                        }
-                                       if ('"' == ch) {
+                                       if (';' == ch) {
                                                ch = fDocument.getChar(cNextPos++);
-                                               while ((cNextPos < fRangeEnd) && ('"' != ch)) {
+                                               while ((cNextPos < fRangeEnd) && (';' != ch)) {
                                                        ch = fDocument.getChar(cNextPos++);
                                                }
                                        } else if ('\'' == ch) {
@@ -296,20 +296,13 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                                ch = fDocument.getChar(cNextPos++);
                                // end tag?
                                s: switch (ch) {
-                               case '/':
+                               case ';':
                                        while (cNextPos < fRangeEnd) {
                                                ch = fDocument.getChar(cNextPos++);
-                                               if ('>' == ch) {
+                                               if ('}' == ch) {
                                                        cNewLines += eatToEndOfLine();
                                                        return LEAF_TAG;
                                                }
-                                       }
-                                       return EOR_TAG;
-                               case '"':
-                                       while (cNextPos < fRangeEnd) {
-                                               ch = fDocument.getChar(cNextPos++);
-                                               if ('"' == ch)
-                                                       break s;
                                        }
                                        return EOR_TAG;
                                case '\'':
@@ -319,7 +312,7 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                                                        break s;
                                        }
                                        return EOR_TAG;
-                               case '>':
+                               case '}':
                                        cNewLines += eatToEndOfLine();
                                        return START_TAG;
                                default:
