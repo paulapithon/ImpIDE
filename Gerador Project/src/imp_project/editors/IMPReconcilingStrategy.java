@@ -272,16 +272,16 @@ public class IMPReconcilingStrategy implements IReconcilingStrategy,
                        if (';' == ch) {
                                while (cNextPos < fRangeEnd) {
                                        ch = fDocument.getChar(cNextPos++);
-                                       if ('?' == ch) {
+                                       if ('}' == ch) {
                                                cNewLines += eatToEndOfLine();
                                                return END_TAG;
                                        }
-                                       if (';' == ch) {
+                                       /*if (';' == ch) {
                                                ch = fDocument.getChar(cNextPos++);
                                                while ((cNextPos < fRangeEnd) && (';' != ch)) {
                                                        ch = fDocument.getChar(cNextPos++);
-                                               }
-                                       } else if ('\'' == ch) {
+                                               }*/
+                                      if ('\'' == ch) {
                                                ch = fDocument.getChar(cNextPos++);
                                                while ((cNextPos < fRangeEnd) && ('\'' != ch)) {
                                                        ch = fDocument.getChar(cNextPos++);
