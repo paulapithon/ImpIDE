@@ -9,12 +9,11 @@ public class IMPPartitionScanner extends RuleBasedPartitionScanner {
 	public IMPPartitionScanner() {
 
 		IToken impComment = new Token(IMP_COMMENT);
-		IToken brackets = new Token(IMP_BRACKETS);
 
 		IPredicateRule[] rules = new IPredicateRule[1];
 
 		rules[0] = new MultiLineRule("/*", "*/", impComment);
-		//rules[1] = new BracketsRule(brackets);
+
 
 		setPredicateRules(rules);
 	}

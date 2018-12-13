@@ -22,7 +22,6 @@ public class IMPBracketScanner extends RuleBasedScanner {
 		IRule[] rules = new IRule[24];
 		
 		rules[0] = new WordRule(new NumberDetector(), number);
-//		rules[1] = new WordPatternRule(new TokenDetector()," ", ":", ids);
 		rules[1] = new WordPatternRule(new TokenDetector(),"start", "", tokens);
 		rules[2] = new WordPatternRule(new TokenDetector(),"language", "", tokens);
 		rules[3] = new WordPatternRule(new TokenDetector(),"class", "", tokens);
