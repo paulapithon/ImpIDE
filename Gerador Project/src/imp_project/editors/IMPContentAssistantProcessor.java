@@ -17,10 +17,7 @@ public class IMPContentAssistantProcessor implements IContentAssistProcessor
     public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
             int offset)
     {
-    	//`language`, `class`, `compile`, `extends`, `syntax`, `this`, `val`, `eval`, `asm`, `print`, `forEach`,
-    	//`nextLabel`, `opCodeOf`, `toString`, `lexical`, `whitespace` e `start`
-        ICompletionProposal[] completionProposals = new ICompletionProposal[17];
-        
+        ICompletionProposal[] completionProposals = new ICompletionProposal[17];        
         completionProposals[0]=new CompletionProposal("language",0,1,5);
         completionProposals[1]=new CompletionProposal("class",0,1,5);
         completionProposals[2]=new CompletionProposal("compile",0,1,5);
